@@ -4,8 +4,7 @@ import { getAllReserves, getReserveById, createReserve, deleteReserveById, updat
 
 const router = Router();
 
-// Obtener todas las reservas
-// Obtener todas las reservas junto con sus detalles
+//
 // Obtener todas las reservas junto con sus detalles, sin incluir el "reserva_id" en los detalles
 router.get("/reserves", getAllReserves);
 

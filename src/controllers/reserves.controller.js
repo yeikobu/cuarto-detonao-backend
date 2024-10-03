@@ -122,7 +122,7 @@ export const createReserve = async (req, res) => {
 
         // Confirmar la transacción
         await client.query('COMMIT');
-        res.status(201).send("Reserva y detalles creados exitosamente");
+        res.status(201).send({ message: "Reserva y detalles creados exitosamente", numero_reserva: reservaId });
 
     } catch (error) {
         await client.query('ROLLBACK');
