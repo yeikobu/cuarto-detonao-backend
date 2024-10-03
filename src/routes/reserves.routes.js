@@ -1,29 +1,28 @@
 import { Router } from "express";
 import { pool } from "../db.js";
+import { getAllReserves, getReserveById, createReserve, deleteReserveById, updateReserveById } from "../controllers/reserves.controller.js";
 
 const router = Router();
 
-router.get("/reserves", (req, res) => {
-  res.send("Obteniendo reservas");
-});
+// Obtener todas las reservas
+// Obtener todas las reservas junto con sus detalles
+// Obtener todas las reservas junto con sus detalles, sin incluir el "reserva_id" en los detalles
+router.get("/reserves", getAllReserves);
 
-router.get("/reserve/:id", (req, res) => {
-    const { id } = req.params //obtiene el id de la reserva a través de los parametros de la ruta
-    res.send("Obteniendo reserva con id: " + id);
-});
 
-router.post("/reserve", (req, res) => {
-    res.send("Creando reserva");
-});
+// Obtener una reserva por su id, junto con sus detalles
+router.get("/reserve/:id", getReserveById);
 
-router.delete("/reserve:id", (req, res) => {
-    const { id } = req.params
-    res.send("Eliminando reserva con id: " + id);
-});
 
-router.put("/reserve/:id", (req, res) => {
-    const { id } = req.params
-    res.send("Actualizando reserva con id: " + id);
-});
+// Crear una nueva reserva con sus detalles
+router.post("/reserve", createReserve);
+
+
+// Eliminar una reserva por su id junto con sus detalles
+router.delete("/reserve/:id", deleteReserveById);
+
+
+// Actualizar una reserva por su id junto con sus detalles
+router.put("/reserve/:id", updateReserveById);
 
 export default router;

@@ -47,11 +47,12 @@ CREATE TABLE pagos (
 
 -- Insertar algunos colores de rosas en la tabla de colores
 INSERT INTO colores (nombre) VALUES
-('Rojo'),
-('Blanco'),
-('Amarillo'),
-('Rosa'),
-('Azul');
+('Roja'),
+('Blanca'),
+('Amarilla'),
+('Naranja con puntas rojas'),
+('Azul'),
+('Morada');
 
 
 -- Insertar una nueva reserva con datos de remitente y destinatario
@@ -65,8 +66,8 @@ VALUES ('Juan', 'Pérez', 'JP', 'Cuarto Medio A', false, 'Ana', 'Gómez', 'Anita
 -- Insertar los colores y cantidades de las rosas asociadas a esa reserva
 INSERT INTO detalles_reserva (reserva_id, color_nombre, cantidad)
 VALUES 
-(1, 'Rojo', 3),  -- 3 rosas rojas
-(1, 'Blanco', 2);  -- 2 rosas blancas
+(1, 'Roja', 3),  -- 3 rosas rojas
+(1, 'Blanca', 2);  -- 2 rosas blancas
 
 
 

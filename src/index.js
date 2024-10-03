@@ -4,6 +4,7 @@ import reservesRoutes from "./routes/reserves.routes.js";
 
 const app = express();
 
+app.use(express.json());
 app.use(reservesRoutes)
 
 app.listen(PORT)
