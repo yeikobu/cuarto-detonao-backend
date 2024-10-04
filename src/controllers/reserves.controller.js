@@ -79,7 +79,7 @@ export const createReserve = async (req, res) => {
     const client = await pool.connect();
 
     // Obtenemos los datos de req.body, incluyendo el campo 'foto' y el array 'detalles'
-    const { remitente_nombre, remitente_apellido, remitente_pseudonimo, remitente_curso, remitente_anonimo, destinatario_nombre, destinatario_apellido, destinatario_pseudonimo, destinatario_curso, total_a_pagar, dedicatoria, foto, detalles } = req.body;
+    const { remitente_nombre, remitente_apellido, remitente_pseudonimo, remitente_curso, remitente_anonimo, destinatario_nombre, destinatario_apellido, destinatario_pseudonimo, destinatario_curso, total_a_pagar, dedicatoria, foto_url, detalles } = req.body;
 
     try {
         // Iniciar la transacción
@@ -89,7 +89,7 @@ export const createReserve = async (req, res) => {
         const reservaResponse = await client.query(
             `INSERT INTO reservas 
                 (remitente_nombre, remitente_apellido, remitente_pseudonimo, remitente_curso, remitente_anonimo, 
-                destinatario_nombre, destinatario_apellido, destinatario_pseudonimo, destinatario_curso, total_a_pagar, dedicatoria, foto) 
+                destinatario_nombre, destinatario_apellido, destinatario_pseudonimo, destinatario_curso, total_a_pagar, dedicatoria, foto_url) 
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) 
             RETURNING id`, 
             [
@@ -104,7 +104,7 @@ export const createReserve = async (req, res) => {
                 destinatario_curso,
                 total_a_pagar,
                 dedicatoria,
-                foto
+                foto_url
             ]
         );
 
@@ -197,7 +197,7 @@ export const updateReserveById = async (req, res) => {
             SET remitente_nombre = $1, remitente_apellido = $2, remitente_pseudonimo = $3, 
                 remitente_curso = $4, remitente_anonimo = $5, destinatario_nombre = $6, 
                 destinatario_apellido = $7, destinatario_pseudonimo = $8, destinatario_curso = $9, 
-                total_a_pagar = $10, dedicatoria = $11, foto = $12
+                total_a_pagar = $10, dedicatoria = $11, foto_url = $12
             WHERE id = $13
             RETURNING *;
         `;

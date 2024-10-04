@@ -23,7 +23,7 @@ CREATE TABLE reservas (
     -- Otros detalles de la reserva
     total_a_pagar INT NOT NULL, -- Calculado con base en las reglas de precios
     dedicatoria TEXT,
-    foto BYTEA, -- Para almacenar la foto si se agrega
+    foto_url VARCHAR(255), -- Para almacenar la URL de la foto
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

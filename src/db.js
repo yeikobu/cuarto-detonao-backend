@@ -1,10 +1,11 @@
 import pg from "pg";
+import { DB_USER, DB_HOST, DB_DATABASE, DB_PASSWORD, DB_PORT } from "./config.js";
 
 export const pool = new pg.Pool({
-  user: "postgres",
-  host: "localhost",
-  database: "cuarto_detonao",
-  password: "Konnichiha.1992**",
-  port: 5432,
+  user: DB_USER,
+  host: DB_HOST,
+  database: DB_DATABASE,
+  password: DB_PASSWORD,
+  port: DB_PORT,
 });
 
