@@ -1,6 +1,6 @@
 import { pool } from "../db.js";
 
-export const sayHello = async (req, res) => {
+export const sayHello = (req, res) => {
     try {
         res.send("Hello World!");
     }catch (error) {
