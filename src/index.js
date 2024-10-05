@@ -10,7 +10,7 @@ app.use(cors());
 
 // O bien, para limitarlo solo a tu origen (front-end)
 app.use(cors({
-    origin: process.env.FRONT_URL || 'http://localhost:4321'  // Cambia esto por la URL de tu front-end
+    origin: 'http://localhost:4321'  // Cambia esto por la URL de tu front-end
 }));
 
 app.use(bodyParser.json({ limit: '1mb' }));
