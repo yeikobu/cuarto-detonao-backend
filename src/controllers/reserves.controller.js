@@ -1,5 +1,14 @@
 import { pool } from "../db.js";
 
+export const sayHello = async (req, res) => {
+    try {
+        res.send("Hello World!");
+    }catch (error) {
+        console.error("Error al enviar mensaje de hola mundo:", error);
+        res.status(500).send("Error al enviar mensaje de hola mundo");
+    }
+}
+
 // Obtener todas las reservas con sus detalles
 export const getAllReserves =  async (req, res) => {
     try {

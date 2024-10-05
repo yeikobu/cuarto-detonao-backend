@@ -1,10 +1,10 @@
 import { Router } from "express";
 import { pool } from "../db.js";
-import { getAllReserves, getReserveById, createReserve, deleteReserveById, updateReserveById } from "../controllers/reserves.controller.js";
+import { sayHello,getAllReserves, getReserveById, createReserve, deleteReserveById, updateReserveById } from "../controllers/reserves.controller.js";
 
 const router = Router();
 
-app.get("/", (req, res) => res.send("Hello World!"));
+app.get("/", (req, res) => sayHello);
 
 // Obtener todas las reservas junto con sus detalles, sin incluir el "reserva_id" en los detalles
 router.get("/reserves", getAllReserves);
