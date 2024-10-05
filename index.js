@@ -5,12 +5,24 @@ import { PORT } from "./src/config.js";
 import reservesRoutes from "./src/routes/reserves.routes.js";
 
 const app = express();
+const allowedOrigins = ['http://localhost:3000', 'https://cuarto-detonao-backend.onrender.com'];
 
 app.use(cors());
 
 // O bien, para limitarlo solo a tu origen (front-end)
 app.use(cors({
-    origin: '*'  // Cambia esto por la URL de tu front-end
+    origin: (origin, callback) => {
+        // Permitir solicitudes sin origen (como desde herramientas locales o servidores)
+        if (!origin) return callback(null, true);
+        
+        // Verificar si el origen está en la lista permitida
+        if (allowedOrigins.indexOf(origin) === -1) {
+            const msg = 'El CORS no permite acceso desde este origen.';
+            return callback(new Error(msg), false);
+        }
+        return callback(null, true);
+    },
+    credentials: true, // Si necesitas compartir cookies o cabeceras de autenticación
 }));
 
 app.use(bodyParser.json({ limit: '1mb' }));
