@@ -10,7 +10,7 @@ app.use(cors());
 
 // O bien, para limitarlo solo a tu origen (front-end)
 app.use(cors({
-    origin: 'https://cuarto-detonao.vercel.app'  // Cambia esto por la URL de tu front-end
+    origin: '*'  // Cambia esto por la URL de tu front-end
 }));
 
 app.use(bodyParser.json({ limit: '1mb' }));
