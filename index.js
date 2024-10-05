@@ -5,7 +5,7 @@ import { PORT } from "./src/config.js";
 import reservesRoutes from "./src/routes/reserves.routes.js";
 
 const app = express();
-const allowedOrigins = ['http://localhost:3000', 'https://cuarto-detonao-backend.onrender.com'];
+const allowedOrigins = ['http://localhost:3000', 'https://cuarto-detonao.vercel.app'];
 
 app.use(cors());
 
