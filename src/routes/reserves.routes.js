@@ -4,7 +4,8 @@ import { getAllReserves, getReserveById, createReserve, deleteReserveById, updat
 
 const router = Router();
 
-//
+app.get("/", (req, res) => res.send("Hello World!"));
+
 // Obtener todas las reservas junto con sus detalles, sin incluir el "reserva_id" en los detalles
 router.get("/reserves", getAllReserves);
 
