@@ -6,6 +6,9 @@ export const pool = new pg.Pool({
   ssl: {
     rejectUnauthorized: false,
   },
+  max: 10, // Número máximo de conexiones en el pool
+  idleTimeoutMillis: 30000, // Tiempo de inactividad después del cual se cierra la conexión
+  connectionTimeoutMillis: 2000,
 });
 
 pool.on('connect', () => {
