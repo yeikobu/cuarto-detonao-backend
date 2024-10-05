@@ -1,8 +1,8 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from 'body-parser';
-import { PORT } from "./config.js";
-import reservesRoutes from "./routes/reserves.routes.js";
+import { PORT } from "./src/config.js";
+import reservesRoutes from "./src/routes/reserves.routes.js";
 
 const app = express();
 
