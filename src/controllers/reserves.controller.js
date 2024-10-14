@@ -192,7 +192,7 @@ export const updateReserveById = async (req, res) => {
         destinatario_curso,
         total_a_pagar,
         dedicatoria,
-        foto, // Asegúrate de recibir el campo 'foto'
+        foto_url,
         detalles // Array de objetos { color_nombre, cantidad }
     } = req.body;
 
@@ -222,7 +222,7 @@ export const updateReserveById = async (req, res) => {
             destinatario_curso,
             total_a_pagar,
             dedicatoria,
-            foto,
+            foto_url,
             id
         ];
         const { rowCount: reservaCount, rows: reservaRows } = await pool.query(updateReservaQuery, reservaValues);
