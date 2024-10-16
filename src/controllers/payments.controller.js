@@ -34,18 +34,59 @@ export const createPayment = async (req, res) => {
 
 export const getAllPayments = async (req, res) => {    
     try {
-        const paymentsResponse = await pool.query(
-            `SELECT * FROM reservas as r
-            JOIN detalles_reserva dr ON r.id = dr.reserva_id
-            JOIN pagos p ON r.id = p.reserva_id`
+        const reservasResponse = await pool.query(
+            `SELECT * FROM reservas as r`
         );
-        const payments = paymentsResponse.rows;
 
-        if(payments.length === 0) {
-            return res.status(404).send("No hay pagos disponibles");
+        const reservas = reservasResponse.rows;
+
+        if(reservas.length === 0) {
+            return res.status(404).send("No hay reservas disponibles");
         }
 
-        res.json(payments);
+        const pagosResponse = await pool.query(
+            `SELECT * FROM pagos`
+        );
+
+        const pagos = pagosResponse.rows;
+
+        // Crear un objeto de pagos por reserva_id en lugar de un array
+        const pagosPorReserva = pagos.reduce((acc, pago) => {
+            acc[pago.reserva_id] = {
+                id: pago.id,
+                reserva_id: pago.reserva_id,
+                metodo_pago: pago.metodo_pago,
+                monto: pago.monto,
+                estado: pago.estado
+            };
+            return acc;
+        }, {}); // Inicializamos con un objeto vacío
+
+        // Filtrar solo las reservas que tienen un pago asociado
+        const reservasConPagos = reservas
+            .filter(reserva => pagosPorReserva[reserva.id]) // Solo incluimos reservas con pago
+            .map(reserva => {
+                return {
+                    ...reserva,
+                    pago: pagosPorReserva[reserva.id]
+                };
+            });
+
+        const detallesResponse = await pool.query("SELECT color_nombre, cantidad, reserva_id FROM detalles_reserva");
+        const detalles = detallesResponse.rows;
+
+        const reservasPagadasConDetalles = reservasConPagos.map(reserva => {
+            const detallesDeReserva = detalles
+                .filter(detalle => detalle.reserva_id === reserva.id)
+                .map(({ color_nombre, cantidad }) => ({ color_nombre, cantidad })); // Excluir reserva_id
+
+            return {
+                ...reserva,
+                detalles: detallesDeReserva
+            };
+        });
+
+        res.json(reservasPagadasConDetalles);
     } catch (error) {
         console.error("Error al obtener todos los pagos:", error);
         res.status(500).send("Error al obtener todos los pagos");
