@@ -54,7 +54,6 @@ export const getAllPayments = async (req, res) => {
         const pagosPorReserva = pagos.reduce((acc, pago) => {
             acc[pago.reserva_id] = {
                 id: pago.id,
-                reserva_id: pago.reserva_id,
                 metodo_pago: pago.metodo_pago,
                 monto: pago.monto,
                 estado: pago.estado
@@ -64,7 +63,6 @@ export const getAllPayments = async (req, res) => {
 
         // Filtrar solo las reservas que tienen un pago asociado
         const reservasConPagos = reservas
-            .filter(reserva => pagosPorReserva[reserva.id]) // Solo incluimos reservas con pago
             .map(reserva => {
                 return {
                     ...reserva,
