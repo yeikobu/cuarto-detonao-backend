@@ -40,10 +40,56 @@ export const getAllPayments = async (req, res) => {
         if(payments.length === 0) {
             return res.status(404).send("No hay pagos disponibles");
         }
-        
+
         res.json(payments);
     } catch (error) {
         console.error("Error al obtener todos los pagos:", error);
         res.status(500).send("Error al obtener todos los pagos");
+    }
+}
+
+export const updatePaymentById = async (req, res) => { 
+    const { id } = req.params;
+    const {
+        reserva_id, 
+        metodo_pago,
+        monto,
+        estado
+    } = req.body;
+
+
+    try {
+        await pool.query("BEGIN");
+
+        const updatePaymentQuery = `
+            UPDATE pagos 
+            SET reserva_id = $1, metodo_pago = $2, monto = $3, estado = $4
+            WHERE id = $5
+            RETURNING *;
+        `;
+        const paymentValues = [
+            reserva_id,
+            metodo_pago,
+            monto,
+            estado,
+            id
+        ];
+        const { rowCount: paymentCount, rows: paymentRows } = await pool.query(updatePaymentQuery, paymentValues);
+
+        if (paymentCount === 0) {
+            await pool.query("ROLLBACK");
+            return res.status(404).send({ message: "Pago no encontrado" });
+        }
+
+        await pool.query("COMMIT");
+
+        res.send({
+            message: `Pago con id ${id} actualizado exitosamente`,
+            payment: paymentRows[0]
+        });
+    } catch (error) {
+        await pool.query("ROLLBACK");
+        console.error("Error al actualizar el pago:", error);
+        res.status(500).send("Error al actualizar el pago");
     }
 }
