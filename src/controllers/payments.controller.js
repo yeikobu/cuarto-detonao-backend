@@ -93,3 +93,26 @@ export const updatePaymentById = async (req, res) => {
         res.status(500).send("Error al actualizar el pago");
     }
 }
+
+export const deletePaymentById = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        await pool.query("BEGIN");
+
+        const { rowCount: paymentCount } = await pool.query("DELETE FROM pagos WHERE id = $1 RETURNING *", [id]);
+
+        if (paymentCount === 0) {
+            await pool.query("ROLLBACK");
+            return res.status(404).send({ message: "Pago no encontrado" });
+        }
+
+        await pool.query("COMMIT");
+
+        res.send({ message: `Pago con id ${id} eliminado exitosamente` });
+    } catch (error) {
+        await pool.query("ROLLBACK");
+        console.error("Error al eliminar el pago:", error);
+        res.status(500).send("Error al eliminar el pago");
+    }
+}
