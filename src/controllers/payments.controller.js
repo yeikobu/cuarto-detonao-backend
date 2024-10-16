@@ -34,7 +34,11 @@ export const createPayment = async (req, res) => {
 
 export const getAllPayments = async (req, res) => {    
     try {
-        const paymentsResponse = await pool.query("SELECT * FROM pagos");
+        const paymentsResponse = await pool.query(
+            `SELECT * FROM reservas as r
+            JOIN detalles_reserva dr ON r.id = dr.reserva_id
+            JOIN pagos p ON r.id = p.reserva_id`
+        );
         const payments = paymentsResponse.rows;
 
         if(payments.length === 0) {
