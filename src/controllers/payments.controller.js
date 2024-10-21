@@ -56,7 +56,8 @@ export const getAllPayments = async (req, res) => {
                 id: pago.id,
                 metodo_pago: pago.metodo_pago,
                 monto: pago.monto,
-                estado: pago.estado
+                estado: pago.estado,
+                fecha_pago: pago.fecha_pago
             };
             return acc;
         }, {}); // Inicializamos con un objeto vacío
